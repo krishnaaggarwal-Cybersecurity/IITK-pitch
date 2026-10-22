@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>KINORA — Care comes full circle</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#101e33;--navy-soft:#1a3356;--ivory:#fdfbf7;--peach:#e8a87c;--peach-bg:#fef1e8;--peach-text:#8a4a2f;
+  --sage-bg:#e8efe6;--sage-text:#2f5a3f;--blue-bg:#e6eef8;--blue-text:#2f5a8a;--ink:#1a2433;--muted:#7c8a99;
+  --line:#ece5db;--white:#ffffff;--card:#ffffff;color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ivory:#0d1320;--ink:#e7ecf3;--muted:#8ea0b5;--line:#243147;--white:#162034;--card:#162034;
+    --peach-bg:#2a1f1a;--peach-text:#f0b48a;--sage-bg:#17261c;--sage-text:#8fd1a4;--blue-bg:#131f30;--blue-text:#9cc0ef;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ivory:#0d1320;--ink:#e7ecf3;--muted:#8ea0b5;--line:#243147;--white:#162034;--card:#162034;
+  --peach-bg:#2a1f1a;--peach-text:#f0b48a;--sage-bg:#17261c;--sage-text:#8fd1a4;--blue-bg:#131f30;--blue-text:#9cc0ef;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:'Plus Jakarta Sans',Arial,sans-serif;color:var(--ink);background:var(--ivory);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{padding:26px 18px;color:#e6edf5;background:var(--navy);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  padding-top:calc(26px + env(safe-area-inset-top,0px))}
+.brand{display:flex;gap:6px;align-items:center;margin-bottom:2px;font-family:'Fraunces',serif;font-size:25px;font-weight:600;letter-spacing:-0.5px}
+.brand .kin{color:#fdfbf7}.brand .ora{color:#e8a87c}
+.tagline{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:#a8b8cc;margin-bottom:28px;font-weight:600;opacity:.9}
+nav button{display:flex;gap:10px;width:100%;margin:3px 0;padding:11px 13px;border:0;border-radius:12px;color:#a8b8cc;
+  background:transparent;text-align:left;cursor:pointer;font:inherit;font-size:14px}
+nav button.active{color:#fff;background:var(--navy-soft);border:1px solid rgba(255,255,255,.08)}
+nav button:hover:not(.active){background:rgba(255,255,255,.05)}
+main{max-width:1180px;width:100%;margin:0 auto;padding:32px 30px}
+header{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+h1{margin:4px 0 0;font-family:'Fraunces',serif;font-weight:500;font-size:28px}
+.subtitle{color:var(--muted);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.primary{padding:11px 17px;border:0;border-radius:12px;color:#fff;background:var(--navy);font-weight:700;cursor:pointer;font:inherit}
+.secondary{padding:10px 15px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-weight:700;cursor:pointer;font:inherit;color:var(--ink)}
+.theme-btn{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;color:var(--ink)}
+.care-person{display:flex;gap:16px;align-items:center;margin-bottom:22px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.avatar{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;color:#fff;background:linear-gradient(135deg,var(--peach),#d4855a);font-weight:700;font-family:'Fraunces',serif;flex-shrink:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.stat,.card{border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.stat{padding:18px}
+.stat span{color:var(--muted);font-size:11.5px;font-weight:600;text-transform:uppercase}
+.stat strong{display:block;margin:7px 0 3px;font-size:26px;font-family:'Fraunces',serif;font-weight:500}
+.content{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.column{display:grid;gap:18px;align-content:start}
+.card-header{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 8px}
+.card-header h2{font-size:16px;margin:0}
+.link{border:0;color:var(--navy-soft);background:none;font-weight:700;font-size:13px;cursor:pointer;font:inherit}
+:root[data-theme="dark"] .link{color:#9cc0ef}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .link{color:#9cc0ef}}
+.task,.appointment,.member,.update,.med{display:flex;gap:12px;align-items:center;padding:13px 18px;border-top:1px solid var(--line)}
+.task-copy,.med-copy{flex:1}
+.task-title{font-weight:600;font-size:14px}
+.task-meta,.appointment p,.member small,.update small,.med-meta{color:var(--muted);font-size:12px}
+.check{width:18px;height:18px;border:2px solid #d8cec1;border-radius:6px;color:#fff;background:transparent;flex-shrink:0;display:grid;place-items:center;font-size:10px;cursor:pointer}
+.check.done{border-color:var(--navy);background:var(--navy)}
+.done-text{color:#9aa6b3;text-decoration:line-through}
+.tag{padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase}
+.tag.urgent{color:var(--peach-text);background:var(--peach-bg)}
+.tag.green{color:var(--sage-text);background:var(--sage-bg)}
+.tag.blue{color:var(--blue-text);background:var(--blue-bg)}
+.appointment-date{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;color:var(--blue-text);background:var(--blue-bg);font-size:10px;font-weight:700;text-align:center;flex-shrink:0}
+.appointment-date b{font-size:17px;font-family:'Fraunces',serif}
+.small-avatar{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#3b5972;background:#c8d7e8;font-size:11px;font-weight:700;flex-shrink:0}
+dialog{width:min(460px,92vw);border:0;border-radius:18px;box-shadow:0 15px 60px rgba(16,30,51,.3);padding:22px;background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(16,30,51,.55);backdrop-filter:blur(4px)}
+label{display:block;margin:14px 0 7px;font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--muted)}
+input,select,textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:12px;outline-color:var(--navy);font:inherit;background:var(--ivory);color:var(--ink)}
+.send{width:44px;border:0;border-radius:12px;color:#fff;background:var(--navy);cursor:pointer;font:inherit}
+.modal-header{display:flex;justify-content:space-between;align-items:center}
+.modal-header button{border:0;background:none;font-size:18px;cursor:pointer;color:var(--ink)}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.sos-btn{width:100%;padding:13px;border-radius:14px;border:1px solid rgba(232,168,124,.4);background:linear-gradient(180deg,#fff8f2,#fff);color:#7a3d26;font-weight:700;margin-top:auto;cursor:pointer;font:inherit}
+.empty{padding:24px 18px;color:var(--muted);font-size:13px;text-align:center}
+.view{display:none}.view.active{display:block}
+.pill-row{display:flex;gap:8px;padding:0 18px 14px;flex-wrap:wrap}
+.pill{padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink);font:inherit}
+.pill.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contact-row{display:flex;gap:7px;margin-top:10px}.contact-row a{flex:1;text-align:center;padding:9px 4px;border-radius:10px;background:rgba(255,255,255,.08);color:#e6edf5;text-decoration:none;font-size:10.5px;font-weight:700}.contact-row a:hover{background:rgba(255,255,255,.16)}.vitals-row{display:flex;gap:12px;align-items:center;padding:13px 18px;border-top:1px solid var(--line)}.vitals-row svg{flex-shrink:0}.vitals-copy{flex:1}.vitals-val{font-family:'Fraunces',serif;font-size:20px}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.insight{padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--card);display:flex;gap:11px;align-items:center}
+.insight .ic{font-size:20px;flex-shrink:0}
+.insight b{display:block;font-size:14px}
+.insight span{color:var(--muted);font-size:11.5px}
+@media(max-width:860px){.insights{grid-template-columns:1fr}}
+@media print{aside,.primary,.secondary,.theme-btn,.sos-btn,.link,#updateForm,#updateForm2{display:none!important}.app{display:block}main{max-width:100%}}
+@media(max-width:860px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}main{padding:18px 14px}.content{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><span>💗</span><span class="kin">KIN</span><span class="ora">ORA</span></div>
+  <div class="tagline">Care comes full circle</div>
+  <nav id="navBtns">
+    <button data-view="dashboard" class="active">◍ Dashboard</button>
+    <button data-view="care">✎ Care plan</button>
+    <button data-view="calendar">▦ Calendar</button>
+    <button data-view="updates">✉ Updates</button>
+    <button data-view="circle">♡ Care Circle</button>
+  </nav>
+  <button class="theme-btn" id="themeBtn" style="margin:6px 0 10px">🌓 Theme</button>
+  <button class="sos-btn" id="sosBtn">🚨 Hold for Family SOS</button>
+  <p style="font-size:10px;color:#a8b8cc;text-align:center;margin-top:10px;opacity:.8">Family alert only. Call 112 in emergency.</p>
+  <div class="contact-row"><a href="tel:112">🚑 112</a><a href="tel:+911234567890" id="doctorCallLink">🩺 Doctor</a></div>
+</aside>
+
+<main>
+<header>
+  <div><div class="subtitle" id="todaySubtitle"></div><h1 id="greeting">Good morning</h1></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="secondary" id="resetBtn" style="font-size:12px">Reset demo</button>
+    <button class="primary" id="openTaskModal">+ Add a task</button>
+  </div>
+</header>
+
+<section class="care-person">
+  <div class="avatar" id="lovedAvatar">AK</div>
+  <div style="flex:1"><h2 id="lovedName" style="margin:0 0 2px;font-size:16px">Care space</h2><p style="margin:0;color:var(--muted);font-size:13px">Private to family · Shared & synced</p></div>
+  <button class="secondary" style="padding:8px 12px;font-size:12px" id="editLovedBtn">Edit</button>
+</section>
+
+<!-- DASHBOARD -->
+<div class="view active" id="view-dashboard">
+<section class="insights" id="insightsRow"></section>
+<section class="stats">
+  <div class="stat"><span>Tasks for today</span><strong id="taskCount">0</strong></div>
+  <div class="stat"><span>Next appointment</span><strong id="nextApptDay">—</strong><span id="nextApptInfo">No appointments yet</span></div>
+  <div class="stat"><span>Weekly summary</span><strong id="weekDone">0 done</strong><span id="weekUpcoming">0 upcoming</span></div>
+</section>
+<section class="content">
+  <div class="column">
+    <section class="card"><div class="card-header"><h2>Today's care plan</h2><button class="link" id="openTaskModal2">Add task</button></div><div id="taskList"></div></section>
+    <section class="card"><div class="card-header"><h2>Family updates</h2></div>
+      <form style="display:flex;gap:8px;margin:4px 18px 14px" id="updateForm"><input id="updateInput" placeholder="Share an update..."/><button class="send">➜</button></form>
+      <div id="updateList"></div>
+    </section>
+  </div>
+  <div class="column">
+    <section class="card"><div class="card-header"><h2>Coming up</h2><button class="link" id="openApptModal">Add</button></div><div id="appointmentList"></div></section>
+    <section class="card"><div class="card-header"><h2>Medications</h2><button class="link" id="openMedModal">Add</button></div><div id="medListShort"></div></section>
+  </div>
+</section>
+</div>
+
+<!-- CARE PLAN -->
+<div class="view" id="view-care">
+<section class="card">
+  <div class="card-header"><h2>All care tasks</h2><button class="link" id="openTaskModal3">Add task</button></div>
+  <div class="pill-row" id="taskFilters">
+    <button class="pill on" data-f="all">All</button>
+    <button class="pill" data-f="open">Open</button>
+    <button class="pill" data-f="done">Done</button>
+  </div>
+  <div id="taskListFull"></div>
+</section>
+<section class="card" style="margin-top:18px">
+  <div class="card-header"><h2>Medications</h2><button class="link" id="openMedModal2">Add</button></div>
+  <div id="medListFull"></div>
+</section>
+<section class="card" style="margin-top:18px">
+  <div class="card-header"><h2>Vitals log</h2><button class="link" id="openVitalsModal">Log reading</button></div>
+  <div id="vitalsList"></div>
+</section>
+<div style="margin-top:14px;text-align:right"><button class="secondary" id="printBtn">🖨 Print care plan</button></div>
+</div>
+
+<!-- CALENDAR -->
+<div class="view" id="view-calendar">
+<section class="card">
+  <div class="card-header"><h2>Upcoming appointments</h2><button class="link" id="openApptModal2">Add appointment</button></div>
+  <div id="appointmentListFull"></div>
+</section>
+</div>
+
+<!-- UPDATES -->
+<div class="view" id="view-updates">
+<section class="card">
+  <div class="card-header"><h2>Family updates</h2></div>
+  <form style="display:flex;gap:8px;margin:4px 18px 14px" id="updateForm2"><input id="updateInput2" placeholder="Share an update..."/><button class="send">➜</button></form>
+  <div id="updateListFull"></div>
+</section>
+</div>
+
+<!-- CARE CIRCLE -->
+<div class="view" id="view-circle">
+<section class="card">
+  <div class="card-header"><h2>Care Circle</h2><button class="link" id="openMemberModal">Add member</button></div>
+  <div id="memberListFull"></div>
+</section>
+</div>
+
+</main>
+</div>
+
+<!-- TASK MODAL -->
+<dialog id="taskModal">
+  <div class="modal-header"><h2 style="margin:0;font-size:18px">Add a task</h2><button id="closeTaskModal">×</button></div>
+  <form id="taskForm">
+    <label>Task</label><input id="taskTitle" required placeholder="e.g. Pick up prescription"/>
+    <div class="grid2">
+      <div><label>Assign to</label><select id="taskAssignee"></select></div>
+      <div><label>Priority</label><select id="taskPriority"><option>Normal</option><option>Important</option></select></div>
+    </div>
+    <label>Due date</label><input type="date" id="taskDue" required/>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelTask">Cancel</button><button class="primary">Add task</button></div>
+  </form>
+</dialog>
+
+<!-- APPOINTMENT MODAL -->
+<dialog id="apptModal">
+  <div class="modal-header"><h2 style="margin:0;font-size:18px">Add appointment</h2><button id="closeApptModal">×</button></div>
+  <form id="apptForm">
+    <label>Title</label><input id="apptTitle" required placeholder="e.g. Cardiology checkup"/>
+    <div class="grid2">
+      <div><label>Date</label><input type="date" id="apptDate" required/></div>
+      <div><label>Time</label><input type="time" id="apptTime" required/></div>
+    </div>
+    <label>Who's taking them</label><select id="apptWho"></select>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelAppt">Cancel</button><button class="primary">Add</button></div>
+  </form>
+</dialog>
+
+<!-- MEDICATION MODAL -->
+<dialog id="medModal">
+  <div class="modal-header"><h2 style="margin:0;font-size:18px">Add medication</h2><button id="closeMedModal">×</button></div>
+  <form id="medForm">
+    <label>Medicine name</label><input id="medName" required placeholder="e.g. Metformin 500mg"/>
+    <div class="grid2">
+      <div><label>Time</label><input type="time" id="medTime" required/></div>
+      <div><label>Frequency</label><select id="medFreq"><option>Daily</option><option>Twice daily</option><option>Weekly</option><option>As needed</option></select></div>
+    </div>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelMed">Cancel</button><button class="primary">Add</button></div>
+  </form>
+</dialog>
+
+<!-- MEMBER MODAL -->
+<dialog id="memberModal">
+  <div class="modal-header"><h2 style="margin:0;font-size:18px">Add a Care Circle member</h2><button id="closeMemberModal">×</button></div>
+  <form id="memberForm">
+    <label>Name</label><input id="memberName" required placeholder="e.g. Anjali"/>
+    <div class="grid2">
+      <div><label>Role</label><select id="memberRole"><option>Helper</option><option>Coordinator</option><option>Viewer</option></select></div>
+      <div><label>Relation</label><input id="memberRelation" placeholder="e.g. cousin"/></div>
+    </div>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelMember">Cancel</button><button class="primary">Add</button></div>
+  </form>
+</dialog>
+
+<!-- VITALS MODAL -->
+<dialog id="vitalsModal">
+  <div class="modal-header"><h2 style="margin:0;font-size:18px">Log a vital reading</h2><button id="closeVitalsModal">×</button></div>
+  <form id="vitalsForm">
+    <label>Type</label><select id="vitalsType"><option value="bp">Blood pressure (systolic)</option><option value="sugar">Blood sugar (mg/dL)</option><option value="weight">Weight (kg)</option></select>
+    <label>Value</label><input type="number" id="vitalsValue" required step="0.1" placeholder="e.g. 128"/>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelVitals">Cancel</button><button class="primary">Save</button></div>
+  </form>
+</dialog>
+
+<!-- SOS MODAL -->
+<dialog id="sosModal">
+  <div class="modal-header"><h2 style="margin:0;font-size:18px">Send SOS to family?</h2><button id="closeSosModal">×</button></div>
+  <p style="font-size:13px;color:var(--muted)">Alerts all Care Circle members instantly. This does NOT call 112.</p>
+  <input id="sosMsg" placeholder="e.g. Dadaji fell"/>
+  <div class="modal-actions"><button class="secondary" id="cancelSos">Cancel</button><button class="primary" style="background:#b44a2a" id="confirmSosBtn">Yes, alert family</button></div>
+</dialog>
+
+<script>
+(function(){
+"use strict";
+function ls(key, fallback){ try{ const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
+function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+
+let theme = (function(){ try{ return localStorage.getItem('kinora_theme') || ''; }catch(e){ return ''; } })();
+if(theme){ document.documentElement.setAttribute('data-theme', theme); }
+
+let lovedOneName = (function(){ try{ return localStorage.getItem('kinora_lovedOne') || ''; }catch(e){ return ''; } })();
+let userName = (function(){ try{ return localStorage.getItem('kinora_userName') || ''; }catch(e){ return ''; } })();
+if(!lovedOneName){ lovedOneName = prompt("Who are you caring for? e.g. Papa") || "Papa"; try{localStorage.setItem('kinora_lovedOne', lovedOneName);}catch(e){} }
+if(!userName){ userName = prompt("Your name?", "Meera") || "Meera"; try{localStorage.setItem('kinora_userName', userName);}catch(e){} }
+
+function initials(n){ return (n||"").trim().split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase() || "?"; }
+
+let members = ls('kinora_members', null) || [
+  {id:1,name:userName,initials:initials(userName),role:"Coordinator",relation:"you",color:"#e8bf9e"},
+  {id:2,name:"Rohan",initials:"R",role:"Helper",relation:"family",color:"#c8d7e8"},
+  {id:3,name:"Sunita",initials:"S",role:"Helper",relation:"support",color:"#dfe0ba"},
+  {id:4,name:lovedOneName,initials:initials(lovedOneName),role:"Viewer",relation:"loved one",color:"#f3d6c8"}
+];
+let tasks = ls('kinora_tasks', null) || [
+  {id:1,title:"Confirm physiotherapy transport",person:userName,due:todayStr(),priority:"Important",done:false},
+  {id:2,title:"Refill the weekly pill organiser",person:"Sunita",due:todayStr(),priority:"Normal",done:false},
+  {id:3,title:"Call Dr. Shah's office",person:userName,due:addDays(1),priority:"Normal",done:false}
+];
+let appointments = ls('kinora_appts', null) || [
+  {id:1,title:"Physiotherapy",date:addDays(2),time:"10:30",who:"Rohan"},
+  {id:2,title:"Blood test",date:addDays(4),time:"08:00",who:"Sunita"}
+];
+let meds = ls('kinora_meds', null) || [
+  {id:1,name:"Metformin 500mg",time:"08:00",freq:"Daily",takenDates:[]},
+  {id:2,name:"Amlodipine 5mg",time:"20:00",freq:"Daily",takenDates:[]}
+];
+let vitals = ls('kinora_vitals', null) || { bp:[128,124,130,122,126], sugar:[110,118,105,112,108], weight:[72,72.2,71.8,72,71.6] };
+let updates = ls('kinora_updates', null) || [
+  {name:"Rohan",initials:"R",text:"Confirmed physiotherapy slot for Tuesday",time:"Yesterday"},
+  {name:"Sunita",initials:"S",text:lovedOneName+" had a calm afternoon",time:"Yesterday"}
+];
+
+function todayStr(){ return new Date().toISOString().split('T')[0]; }
+function addDays(n){ const d=new Date(); d.setDate(d.getDate()+n); return d.toISOString().split('T')[0]; }
+function fmtDate(iso){ const d=new Date(iso+"T00:00"); return d.toLocaleDateString('en-IN',{month:'short'}).toUpperCase()+"|"+d.getDate(); }
+
+const $=(id)=>document.getElementById(id);
+let taskFilter='all';
+
+function persistAll(){ save('kinora_members',members); save('kinora_tasks',tasks); save('kinora_appts',appointments); save('kinora_meds',meds); save('kinora_updates',updates); save('kinora_vitals',vitals); }
+
+function sparkline(arr,color){
+  const w=120,h=36,pad=4; const min=Math.min(...arr),max=Math.max(...arr),range=(max-min)||1;
+  const pts=arr.map((v,i)=>[pad+i*((w-2*pad)/(arr.length-1||1)), h-pad-((v-min)/range)*(h-2*pad)]);
+  const d=pts.map((p,i)=>(i===0?'M':'L')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><path d="${d}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+function renderVitals(container){
+  container.innerHTML="";
+  const defs=[['bp','Blood pressure','#8a4a2f'],['sugar','Blood sugar','#2f5a8a'],['weight','Weight','#2f5a3f']];
+  defs.forEach(([key,label,color])=>{
+    const arr=vitals[key]||[]; const last=arr.length?arr[arr.length-1]:'—';
+    const row=document.createElement('div'); row.className='vitals-row';
+    row.innerHTML=`${sparkline(arr.length?arr:[0,0],color)}<div class="vitals-copy"><div class="task-meta">${label}</div><div class="vitals-val">${last}</div></div>`;
+    container.appendChild(row);
+  });
+}
+
+function fillAssigneeSelects(){
+  [$('taskAssignee'),$('apptWho')].forEach(sel=>{
+    if(!sel) return;
+    sel.innerHTML=""; members.forEach(m=>{ const o=document.createElement('option'); o.value=m.name; o.textContent=m.name; sel.appendChild(o); });
+  });
+}
+
+function taskRow(t){
+  const row=document.createElement('div'); row.className='task';
+  row.innerHTML = `<button class="check ${t.done?'done':''}">${t.done?'✓':''}</button>
+    <div class="task-copy"><div class="task-title ${t.done?'done-text':''}">${esc(t.title)}</div><div class="task-meta">${esc(t.person)} · ${t.due===todayStr()?'Today':t.due} · ${t.priority}</div></div>
+    <span class="tag ${t.priority==='Important'?'urgent':'green'}">${t.priority}</span>
+    <button class="link" style="color:#b44a2a" data-del="${t.id}">✕</button>`;
+  row.querySelector('.check').onclick=()=>{ t.done=!t.done; persistAll(); renderAll(); };
+  row.querySelector('[data-del]').onclick=()=>{ tasks=tasks.filter(x=>x.id!==t.id); persistAll(); renderAll(); };
+  return row;
+}
+function esc(s){ const d=document.createElement('div'); d.textContent=s==null?"":s; return d.innerHTML; }
+
+function renderTasks(container, list){
+  container.innerHTML="";
+  if(!list.length){ container.innerHTML='<div class="empty">No tasks here yet.</div>'; return; }
+  list.forEach(t=>container.appendChild(taskRow(t)));
+}
+
+function renderAppointments(container, full){
+  container.innerHTML="";
+  const sorted=[...appointments].sort((a,b)=>a.date.localeCompare(b.date));
+  const list = full? sorted : sorted.slice(0,3);
+  if(!list.length){ container.innerHTML='<div class="empty">No appointments scheduled.</div>'; return; }
+  list.forEach(a=>{
+    const [mon,day]=fmtDate(a.date).split("|");
+    const d=document.createElement('div'); d.className='appointment';
+    d.innerHTML=`<div class="appointment-date">${mon}<br><b>${day}</b></div><div style="flex:1"><strong>${esc(a.title)}</strong><p>${a.time}</p><p>${esc(a.who)} is taking ${esc(lovedOneName)}</p></div>
+      <button class="link" style="color:#b44a2a" data-del="${a.id}">✕</button>`;
+    d.querySelector('[data-del]').onclick=()=>{ appointments=appointments.filter(x=>x.id!==a.id); persistAll(); renderAll(); };
+    container.appendChild(d);
+  });
+}
+
+function renderMeds(container){
+  container.innerHTML="";
+  if(!meds.length){ container.innerHTML='<div class="empty">No medications added.</div>'; return; }
+  const t=todayStr();
+  meds.forEach(m=>{
+    if(!m.takenDates) m.takenDates=[];
+    const takenToday=m.takenDates.includes(t);
+    let streak=0,d=new Date();
+    while(m.takenDates.includes(d.toISOString().split('T')[0])){ streak++; d.setDate(d.getDate()-1); }
+    const row=document.createElement('div'); row.className='med';
+    row.innerHTML=`<button class="check ${takenToday?'done':''}" data-mark="${m.id}">${takenToday?'✓':''}</button>
+      <div class="med-copy"><strong style="font-size:14px">${esc(m.name)}</strong><div class="med-meta">${m.time} · ${m.freq} · ${streak>0?streak+'d streak':'not taken today'}</div></div>
+      <button class="link" style="color:#b44a2a" data-del="${m.id}">✕</button>`;
+    row.querySelector('[data-mark]').onclick=()=>{ const i=m.takenDates.indexOf(t); if(i>-1) m.takenDates.splice(i,1); else m.takenDates.push(t); persistAll(); renderAll(); };
+    row.querySelector('[data-del]').onclick=()=>{ meds=meds.filter(x=>x.id!==m.id); persistAll(); renderAll(); };
+    container.appendChild(row);
+  });
+}
+
+function renderMembers(container){
+  container.innerHTML="";
+  members.forEach(m=>{
+    const d=document.createElement('div'); d.className='member';
+    d.innerHTML=`<div class="small-avatar" style="background:${m.color}">${m.initials}</div>
+      <div style="flex:1"><strong>${esc(m.name)} · ${m.role}</strong><br><small>${esc(m.relation)}</small></div>
+      <button class="link" style="color:#b44a2a" data-del="${m.id}">✕</button>`;
+    d.querySelector('[data-del]').onclick=()=>{ if(members.length>1){ members=members.filter(x=>x.id!==m.id); persistAll(); renderAll(); } };
+    container.appendChild(d);
+  });
+}
+
+function renderUpdates(container){
+  container.innerHTML="";
+  if(!updates.length){ container.innerHTML='<div class="empty">No updates yet.</div>'; return; }
+  updates.forEach(u=>{
+    const r=document.createElement('div'); r.className='update';
+    r.innerHTML=`<div class="small-avatar">${esc(u.initials)}</div><div style="flex:1"><strong>${esc(u.name)} <small>· ${u.time}</small></strong><br><small>${esc(u.text)}</small></div>`;
+    container.appendChild(r);
+  });
+}
+
+function renderInsights(){
+  const t=todayStr();
+  const overdue=tasks.filter(x=>!x.done && x.due<t).length;
+  const dueToday=tasks.filter(x=>!x.done && x.due===t).length;
+  const takenToday=meds.filter(m=>(m.takenDates||[]).includes(t)).length;
+  const adherence=meds.length? Math.round(takenToday/meds.length*100): 100;
+  const upcoming=[...appointments].filter(a=>a.date>=t).sort((a,b)=>a.date.localeCompare(b.date))[0];
+  let apptDays='—'; if(upcoming){ apptDays=Math.round((new Date(upcoming.date)-new Date(t))/86400000); apptDays=apptDays<=0?'Today':apptDays+'d away'; }
+  const cards=[
+    {ic: overdue? '⚠️':'✅', b: overdue? overdue+' overdue task'+(overdue>1?'s':'') : dueToday+' due today', s: overdue? 'Needs attention' : 'On track'},
+    {ic:'💊', b: adherence+'% adherence', s: takenToday+' of '+meds.length+' meds taken today'},
+    {ic:'📅', b: apptDays, s: upcoming? upcoming.title : 'No appointment set'}
+  ];
+  $('insightsRow').innerHTML = cards.map(c=>`<div class="insight"><div class="ic">${c.ic}</div><div><b>${c.b}</b><span>${c.s}</span></div></div>`).join('');
+}
+
+function renderAll(){
+  renderInsights();
+  renderTasks($('taskList'), tasks.filter(t=>t.due===todayStr()));
+  let filtered = taskFilter==='all'?tasks: taskFilter==='open'?tasks.filter(t=>!t.done):tasks.filter(t=>t.done);
+  renderTasks($('taskListFull'), filtered);
+  renderAppointments($('appointmentList'), false);
+  renderAppointments($('appointmentListFull'), true);
+  renderMeds($('medListShort'));
+  renderMeds($('medListFull'));
+  renderMembers($('memberListFull'));
+  renderVitals($('vitalsList'));
+  renderUpdates($('updateList'));
+  renderUpdates($('updateListFull'));
+  fillAssigneeSelects();
+
+  $('taskCount').textContent = tasks.filter(t=>!t.done && t.due===todayStr()).length;
+  $('weekDone').textContent = tasks.filter(t=>t.done).length+" done";
+  $('weekUpcoming').textContent = tasks.filter(t=>!t.done).length+" upcoming";
+
+  const upcoming=[...appointments].filter(a=>a.date>=todayStr()).sort((a,b)=>a.date.localeCompare(b.date))[0];
+  if(upcoming){ const [,day]=fmtDate(upcoming.date).split("|"); $('nextApptDay').textContent=new Date(upcoming.date+"T00:00").toLocaleDateString('en-IN',{weekday:'short'}); $('nextApptInfo').textContent=upcoming.title+" · "+upcoming.time; }
+  else { $('nextApptDay').textContent="—"; $('nextApptInfo').textContent="No appointments yet"; }
+}
+
+// nav
+document.querySelectorAll('#navBtns button').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('#navBtns button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    $('view-'+btn.dataset.view).classList.add('active');
+  };
+});
+
+// theme
+$('themeBtn').onclick=()=>{
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur==='dark' ? 'light' : (cur==='light' ? '' : 'dark');
+  if(next){ document.documentElement.setAttribute('data-theme', next); } else { document.documentElement.removeAttribute('data-theme'); }
+  try{ localStorage.setItem('kinora_theme', next); }catch(e){}
+};
+
+// task filters
+document.querySelectorAll('#taskFilters .pill').forEach(p=>{
+  p.onclick=()=>{ document.querySelectorAll('#taskFilters .pill').forEach(x=>x.classList.remove('on')); p.classList.add('on'); taskFilter=p.dataset.f; renderAll(); };
+});
+
+// task modal
+function openTaskModal(){ $('taskDue').min=todayStr(); $('taskDue').value=todayStr(); $('taskModal').showModal(); }
+$('openTaskModal').onclick=openTaskModal; $('openTaskModal2').onclick=openTaskModal; $('openTaskModal3').onclick=openTaskModal;
+$('closeTaskModal').onclick=()=>$('taskModal').close(); $('cancelTask').onclick=()=>$('taskModal').close();
+$('taskForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const due=$('taskDue').value; if(due<todayStr()){ alert('Past date not allowed!'); return; }
+  tasks.unshift({id:Date.now(), title:$('taskTitle').value, person:$('taskAssignee').value, due, priority:$('taskPriority').value, done:false});
+  persistAll(); e.target.reset(); $('taskModal').close(); renderAll();
+});
+
+// appointment modal
+function openApptModal(){ $('apptDate').min=todayStr(); $('apptModal').showModal(); }
+$('openApptModal').onclick=openApptModal; $('openApptModal2').onclick=openApptModal;
+$('closeApptModal').onclick=()=>$('apptModal').close(); $('cancelAppt').onclick=()=>$('apptModal').close();
+$('apptForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  appointments.push({id:Date.now(), title:$('apptTitle').value, date:$('apptDate').value, time:$('apptTime').value, who:$('apptWho').value});
+  persistAll(); e.target.reset(); $('apptModal').close(); renderAll();
+});
+
+// med modal
+function openMedModal(){ $('medModal').showModal(); }
+$('openMedModal').onclick=openMedModal; $('openMedModal2').onclick=openMedModal;
+$('closeMedModal').onclick=()=>$('medModal').close(); $('cancelMed').onclick=()=>$('medModal').close();
+$('medForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  meds.push({id:Date.now(), name:$('medName').value, time:$('medTime').value, freq:$('medFreq').value});
+  persistAll(); e.target.reset(); $('medModal').close(); renderAll();
+});
+
+// member modal
+$('openMemberModal').onclick=()=>$('memberModal').showModal();
+$('closeMemberModal').onclick=()=>$('memberModal').close(); $('cancelMember').onclick=()=>$('memberModal').close();
+$('memberForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name=$('memberName').value;
+  const palette=["#e8bf9e","#c8d7e8","#dfe0ba","#f3d6c8","#d8c8e8","#c8e8df"];
+  members.push({id:Date.now(), name, initials:initials(name), role:$('memberRole').value, relation:$('memberRelation').value||'family', color:palette[members.length%palette.length]});
+  persistAll(); e.target.reset(); $('memberModal').close(); renderAll();
+});
+
+// updates
+function addUpdate(text){
+  if(!text.trim()) return;
+  updates.unshift({name:userName, initials:initials(userName), text:text.trim(), time:"Just now"});
+  persistAll(); renderAll();
+}
+$('updateForm').addEventListener('submit', e=>{ e.preventDefault(); addUpdate($('updateInput').value); $('updateInput').value=""; });
+$('updateForm2').addEventListener('submit', e=>{ e.preventDefault(); addUpdate($('updateInput2').value); $('updateInput2').value=""; });
+
+// edit loved one
+$('editLovedBtn').onclick=()=>{
+  const name=prompt("Loved one's name:", lovedOneName);
+  if(name && name.trim()){
+    lovedOneName=name.trim(); try{ localStorage.setItem('kinora_lovedOne', lovedOneName); }catch(e){}
+    const lo=members.find(m=>m.relation==='loved one'); if(lo){ lo.name=lovedOneName; lo.initials=initials(lovedOneName); }
+    persistAll();
+    $('lovedName').textContent=lovedOneName+"'s care space"; $('lovedAvatar').textContent=initials(lovedOneName);
+    renderAll();
+  }
+};
+
+// reset
+$('resetBtn').onclick=()=>{
+  if(!confirm("Reset all demo data on this device?")) return;
+  ['kinora_lovedOne','kinora_userName','kinora_members','kinora_tasks','kinora_appts','kinora_meds','kinora_updates'].forEach(k=>{ try{localStorage.removeItem(k);}catch(e){} });
+  location.reload();
+};
+
+// SOS
+let holdTimer;
+$('sosBtn').addEventListener('mousedown', ()=>{ holdTimer=setTimeout(()=>$('sosModal').showModal(), 700); });
+$('sosBtn').addEventListener('touchstart', ()=>{ holdTimer=setTimeout(()=>$('sosModal').showModal(), 700); });
+['mouseup','mouseleave','touchend'].forEach(evt=>$('sosBtn').addEventListener(evt, ()=>clearTimeout(holdTimer)));
+$('closeSosModal').onclick=()=>$('sosModal').close(); $('cancelSos').onclick=()=>$('sosModal').close();
+$('confirmSosBtn').onclick=()=>{
+  const msg=$('sosMsg').value || "Needs help";
+  addUpdate("🆘 SOS: "+msg+" — all "+(members.length-1)+" Care Circle members alerted.");
+  $('sosModal').close(); $('sosMsg').value=""; alert("Family alerted: "+msg);
+};
+
+// vitals modal
+$('openVitalsModal').onclick=()=>$('vitalsModal').showModal();
+$('closeVitalsModal').onclick=()=>$('vitalsModal').close(); $('cancelVitals').onclick=()=>$('vitalsModal').close();
+$('vitalsForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const type=$('vitalsType').value, val=parseFloat($('vitalsValue').value);
+  if(!vitals[type]) vitals[type]=[];
+  vitals[type].push(val); if(vitals[type].length>12) vitals[type].shift();
+  persistAll(); e.target.reset(); $('vitalsModal').close(); renderAll();
+});
+$('printBtn').onclick=()=>window.print();
+
+// init text
+$('todaySubtitle').textContent = new Date().toLocaleDateString('en-IN',{weekday:'long', day:'numeric', month:'long'});
+$('greeting').textContent = "Good morning, "+userName+".";
+$('lovedName').textContent = lovedOneName+"'s care space";
+$('lovedAvatar').textContent = initials(lovedOneName);
+
+persistAll();
+renderAll();
+})();
+</script>
+</body>
+</html>
